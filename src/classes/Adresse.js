@@ -1,4 +1,3 @@
-import IncrementId from '@/classes/IncrementId.js'
 import Store from 'vuex'
 
 let id = 0
