@@ -1,27 +1,38 @@
 <template>
-  <div id="adresse">
-    <h1>mes adresses</h1>
-    <input type="text" v-model="newAdresse" v-on:keyup.enter="addAdresse" />
-    <button @click="addAdresse">enregister</button>
-    <p v-if="alert">{{ alert }}</p>
-
+  <div id="adresse" class="container is-fluid">
+    <div class="box">
+      <h1 class="title is-1 is-spaced">Mes adresses</h1>
+      <p class="subtitle-3 is-spaced">Principe: </p>
+      <p class="text pb-5">Vous entrez une adresse valide, c'est à dire un nom de rue et un nom de ville au minimum, ... et c'est parti...</p>
+      <div class="field has-addons has-addons-centered pb-5">
+        <p v-if="alert">{{ alert }}</p>
+          <div class="control">
+            <input type="text" class="input" v-model="newAdresse" v-on:keyup.enter="addAdresse" placeholder="Ex: 10 rue Georges Genoux Vesoul">
+          </div>
+          <div class="control">
+            <button class="button" @click="addAdresse">Enregistrer</button>
+        </div>
+      </div>
+    </div>  
     <div v-if="getAdresses.length">
-      <h3>Mes adresses enregistrées</h3>
-      <table>
+      <h3 class="title is-4 pt-3">Mes adresses enregistrées</h3>
+      <table class="table">
         <tr>
           <th>#</th>
-          <th>adresses</th>
-          <th>actions</th>
-          <th>coordonnées</th>
+          <th>Adresses</th>
+          <th>Actions</th>
+          <th>Coordonnées</th>
         </tr>
         <tr v-for="adresse in getAdresses" :key="adresse.id">
           <td>{{ adresse.id }}</td>
           <td>{{ adresse.text }}</td>
           <td>
-            <button @click="() => deleteAdresse(adresse)">Effacer</button>
-            <button @click="() => queryCoo(adresse)">Demander coo</button>
+            <div class="buttons are-small">
+              <button class="button" @click="() => deleteAdresse(adresse)">Effacer</button>
+              <button class="button" @click="() => queryCoo(adresse)">Demander coordonnées</button>
+            </div>
           </td>
-          <td v-if="adresse.lat">lat: {{ adresse.lat }} / long: {{ adresse.lng }}</td>
+          <td>lat: {{ adresse.lat }} / long: {{ adresse.lng }}</td>
         </tr>
       </table>
     </div>
