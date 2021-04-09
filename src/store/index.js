@@ -4,12 +4,17 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  name: 'storeApp',
   state: {
     adresses: [],
-    },
+    authenticated: false,
+  },
   getters: {
     getAdresses: (state) => {
       return state.adresses
+    },
+    isAuthenticated: (state) => {
+      return state.authenticated
     }
   },
   mutations: {
@@ -18,6 +23,13 @@ export default new Vuex.Store({
     },
     REMOVE_ADRESSE(state, item) {
       state.adresses = state.adresses.filter(adresse => adresse.id !== item.id)
+    },
+    SET_AUTHENTICATED(state, authenticated) {
+      if (authenticated == false) {
+        state.authenticated = false
+      } else {
+        state.authenticated = true
+      }
     }
   },
   actions: {
@@ -30,8 +42,9 @@ export default new Vuex.Store({
     updateAdresse(context, adresse) {
       context.commit('REMOVE_ADRESSE', adresse)
       context.commit('ADD_ADRESSE', adresse)
+    },
+    setAuthenticated(context, authenticated) {
+      context.commit('SET_AUTHENTICATED', authenticated)
     }
-  },
-  modules: {
   }
 })

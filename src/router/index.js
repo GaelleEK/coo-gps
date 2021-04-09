@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Login from '../components/Login.vue'
+import Adresse from '../components/Adresse.vue'
+import store from '../store/index'
+
 
 Vue.use(VueRouter)
 
@@ -13,12 +17,14 @@ const routes = [
   {
     path: '/adresse',
     name: 'Adresse',
-    component: () => import(/* webpackChunkName: "adresse" */ '../components/Adresse.vue')
+    component: Adresse,
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '../components/Login.vue')
+    name: 'Login',
+    component: Login
+    
   },
   {
     path: '/about',
@@ -27,7 +33,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  },
 ]
 
 const router = new VueRouter({
@@ -35,5 +41,20 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  //console.log(`navigue de ${from.name} vers ${to.name}`)
+  //console.log('store : ', store.getters.isAuthenticated ,'tomatched : ' ,to.matched,'state : ', store.state)
+  if (to.meta.requiresAuth) {
+    if (!store.state.authenticated) {
+      next({ name: 'Login' })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
 
 export default router
