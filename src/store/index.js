@@ -3,6 +3,14 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+let id = 0
+function createAdresse(text) {
+  return {
+    text,
+    id: id++
+  }
+}
+
 export default new Vuex.Store({
   name: 'storeApp',
   state: {
@@ -18,7 +26,8 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    ADD_ADRESSE(state, adresse) {
+    ADD_ADRESSE(state, text) {
+      let adresse = createAdresse(text)
       state.adresses.push(adresse)
     },
     REMOVE_ADRESSE(state, item) {
@@ -46,5 +55,5 @@ export default new Vuex.Store({
     setAuthenticated(context, authenticated) {
       context.commit('SET_AUTHENTICATED', authenticated)
     }
-  }
+  },
 })

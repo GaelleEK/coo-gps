@@ -44,7 +44,6 @@
 
 <script>
 import { mapGetters } from "vuex"
-
 import UploadAdresses from './UploadAdressesTest.vue';
 
 let nextAdresseId = 1;
@@ -69,8 +68,7 @@ export default {
       const text = this.newAdresse
       if (text !== "") {
         this.newAdresse = ""
-        const adresse = createAdresse(text)
-        this.$store.dispatch("addAdresse", adresse)
+        this.$store.dispatch("addAdresse", text)
       } else {
         this.alert = "Veuillez vérifier votre saisie"
       }
@@ -79,7 +77,7 @@ export default {
       this.$store.dispatch("deleteAdresse", adresse)
     },
     queryCoo(adresse) {
-      let qryAdresse = adresse.text
+      let qryAdresse = adresse
       const xmlhttp = new XMLHttpRequest()
       xmlhttp.onreadystatechange = () => {
         if (xmlhttp.readyState == 4) {
