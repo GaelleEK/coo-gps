@@ -15,6 +15,11 @@ const routes = [
     component: Home
   },
   {
+    path: '/test',
+    name: 'test',
+    component: () => import(/* webpackChunkName: "test" */ '../components/UploadAdressesTest.vue')
+  },
+  {
     path: '/adresse',
     name: 'Adresse',
     component: Adresse,
@@ -42,6 +47,7 @@ const router = new VueRouter({
   routes
 })
 
+//* permet de voir si une route a un champ meta avant d'être rendu *//
 router.beforeEach((to, from, next) => {
   //console.log(`navigue de ${from.name} vers ${to.name}`)
   //console.log('store : ', store.getters.isAuthenticated ,'tomatched : ' ,to.matched,'state : ', store.state)

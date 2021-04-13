@@ -21,8 +21,8 @@
             </div>
             <div class="field">
                 <button type="button" class="button is-light" @click="login">Login</button>
+                <p v-if="errorMessage" class="help is-danger">{{ errorMessage }}</p>
             </div>
-            <p v-if="errorMessage" class="help">{{ errorMessage }}</p>
         </div>
     </div>
 </template>
@@ -50,7 +50,7 @@ export default {
             if (this.input.username != '' && this.input.password != '') {
                 if (this.input.username === this.account.username && this.input.password === this.account.password) {
                     this.$store.dispatch("setAuthenticated", true)
-                    //localStorage.setItem('auth', true)
+                    localStorage.setItem('auth', true)
                     this.$router.replace({ path: '/adresse' })
                 } else {
                     this.errorMessage = "Le nom et/ou le mot de passe sont incorrects"

@@ -11,20 +11,17 @@
             </div>
 
             <div class="navbar-item">
-                <router-link to="/login" class="navbar-item" v-show="!isAuthenticated">Login</router-link> 
-            </div>
-
-            <div class="navbar-item">
                 <router-link to="/adresse" exact-active-path replace>Adresse</router-link>
             </div>
-            <div class="navbar-item">
-                <button  class="button is-small is-outlined" v-if="isAuthenticated" @click="logout">Logout</button>
+
+            <div class="navbar-item navbar-end">
+                <button  class="button is-small is-outlined " v-if="isAuthenticated" @click="logout">Logout</button>
             </div>
         </div>
     </nav>
-        <p>route courante: {{ $route.name }}</p>
+        <!-- <p>route courante: {{ $route.name }}</p>
         <p>localStorage auth : {{ localStorage }}</p>
-        <p>isAuthenticated : {{ isAuthenticated }}</p>
+        <p>isAuthenticated : {{ isAuthenticated }}</p> -->
         <router-view class="container has-text-centered"/>
 </div>
 </template>
@@ -41,7 +38,7 @@ export default {
     methods: {
         logout() {
             this.$store.dispatch("setAuthenticated", false)
-            //localStorage.setItem('auth', false)
+            localStorage.setItem('auth', false)
         }
     },
     computed: {
