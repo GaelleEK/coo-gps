@@ -52,6 +52,8 @@ export default {
     },
     methods: {
         handleFileUpload() {
+            console.log(this.file)
+
             if (this.file != '') {
                 console.log('fichier déjà chargé')
             }
@@ -62,7 +64,16 @@ export default {
                this.file = files[i]
                console.log(this.file.name)
            }
-           console.log(files)
+           this.$refs.filesList.value = ''
+           ////EXEMPLE DOUBLE BOUCLE
+        //    var tab = [ 'choix1', 'choix1', 'choix3', 'choix4'];
+        //     for (var i = 0; i < tab.length-1; i++) {
+        //     for (var j = i+1; j < tab.length; j++) {
+        //     if (tab[i] == tab[j]) {
+        //         alert('Doublon');
+        //     };
+        // };
+    // };
         },
         submitFile() {
             if (this.file != '') {
