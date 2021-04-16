@@ -47,16 +47,23 @@ export default {
     methods: {
         //* méthode appelé lors du click sur le bouton login vérifie si le mot de passe correspond aux variables en fonction on modif le message d'erreur *//
         login() {
-            if (this.input.username != '' && this.input.password != '') {
-                if (this.input.username === this.account.username && this.input.password === this.account.password) {
-                    this.$store.dispatch("setAuthenticated", true)
-                    localStorage.setItem('auth', true)
-                    this.$router.replace({ path: '/adresse' })
-                } else {
-                    this.errorMessage = "Le nom et/ou le mot de passe sont incorrects"
-                }
+            // vérification de localstorage pour auth auto mais ne fonctionne pas :'-( 
+            if (localStorage.getItem('auth')) {
+                this.$store.dispatch("setAuthenticated", true)
+                this.$router.replace({ path: '/adresse' })
+                //localStorage.setItem('auth', true)
             } else {
-                this.errorMessage = "Vous n'êtes pas enregistré"
+                if (this.input.username != '' && this.input.password != '') {
+                    if (this.input.username === this.account.username && this.input.password === this.account.password) {
+                        this.$store.dispatch("setAuthenticated", true)
+                        localStorage.setItem('auth', true)
+                        this.$router.replace({ path: '/adresse' })
+                    } else {
+                        this.errorMessage = "Le nom et/ou le mot de passe sont incorrects"
+                    }
+                } else {
+                    this.errorMessage = "Vous n'êtes pas enregistré"
+                }
             }
         }
         

@@ -43,36 +43,38 @@ export default {
         }
     },
     methods: {
-        handleFileUpload() {
+        handleFileUpload($event) {
             this.file = this.$refs.file.files[0]
-            if(this.file) { this.readFile() }
+            
+            console.log('handler file', 'ref', this.$refs.file, 'this file', this.life)
             
         },
         submitFile() {
             this.readFile()
-            console.log(resultRead)
+            console.log('submit file')
+            
         },
         readFile() {
-            let copie = this.file
-            let reader = new FileReader
-            if (reader.onloadend) {
-                reader.onload = function($event) {
-                JSON.parse(JSON.stringify(reader.result))
-                resultRead = reader.result.split('\n')
-                resultRead.forEach(item => {
-                    if (item != '') {
-                        const adresse = createAdresse(item)
-                       
-                        //console.log(adresse)
-                    }
-                });
-            }
-            
-                // localStorage.setItem('adresses', resultRead)
-                // localStorage.removeItem('adresses')
-                //console.log(resultRead)
-            }
-            reader.readAsBinaryString(copie)
+            console.log('read file')
+            // let copie = this.file
+            // let reader = new FileReader
+            // if (reader.onload) {
+            //     reader.onload = function($event) {
+            //     JSON.parse(JSON.stringify(reader.result))
+            //     resultRead = reader.result.split('\n')
+            //     resultRead.forEach(item => {
+            //         if (item != '') {
+            //             const adresse = item
+            //             this.$store.dispatch("addAdresse", item)
+            //             console.log(adresse)
+            //         }
+            //     });
+            // }
+            //     // localStorage.setItem('adresses', resultRead)
+            //     // localStorage.removeItem('adresses')
+            //     //console.log(resultRead)
+            // }
+            // reader.readAsBinaryString(copie)
         },
     }
 }
