@@ -27,16 +27,26 @@ export default new Vuex.Store({
   },
   mutations: {
     ADD_ADRESSE(state, item) {
+      // TODO: voir comment gérer l'emission d'erreur pour adresse valide ou invalide
       let adresse 
-      if(state.adresses.includes(item)) {
-        adresse.push(item)
-        let pos = state.adresses.indexOf(item)
-        state.adresses.splice(pos, 1)
-      } else {
+      //si state adresses vide alors j enregistre adresse
+      if(state.adresses.length == 0) {
         adresse = createAdresse(item)
+        state.adresses.push(adresse)
+      } else {
+        // si state adresses a des adresses
+        if(state.adresses.length > 0) {
+          //variable q filtre les adresses identiques
+          let q = state.adresses.filter(adresse => adresse.text == item)
+          if(q.length == 0) {
+            console.log('adresse valide')
+            adresse = createAdresse(item)
+            state.adresses.push(adresse)
+          } else {
+            console.log('adresse invalide')
+          }
+        }
       }
-      console.log('store add adresse', adresse, 'state adresse', state.adresses)
-      state.adresses.push(adresse)
     },
     REMOVE_ADRESSE(state, item) {
       state.adresses = state.adresses.filter(adresse => adresse.id !== item.id)
