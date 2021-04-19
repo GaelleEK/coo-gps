@@ -47,6 +47,7 @@
 <script>
 import { mapGetters } from "vuex"
 import UploadAdresses from './UploadAdressesTest.vue'
+//import FetchData from './FetchData.vue'
 
 const axios = require('axios')
 
@@ -81,9 +82,10 @@ export default {
 
       axios
          .get(`https://api.torop.net/cartographie/geocode?adresse=${adresse.text}`)
-         .then((response) => {this.result = response.data.data.infos; this.resultRep = response; console.log(response)})
-         .catch(error => console.log(error));
-
+         .then((response) => {this.result = response.data.data.infos; this.resultRep = response; console.log(this.result)})
+         //.catch(error => this.error);
+      // TODO: à voir coo ne s affiche pas au 1ier clic
+      adresse.text = this.result['adresse']
        adresse.lat = this.result['lat']
        adresse.lng = this.result['lng']
        console.log('add ac lat', adresse)
