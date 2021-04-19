@@ -38,6 +38,8 @@
           <td>lat: {{ adresse.lat }} / long: {{ adresse.lng }}</td>
         </tr>
       </table>
+      <div>{{ result }}</div>
+      <div>{{ resultRep }}</div>
     </div>
   </div>
 </template>
@@ -45,6 +47,8 @@
 <script>
 import { mapGetters } from "vuex"
 import UploadAdresses from './UploadAdressesTest.vue'
+
+const axios = require('axios')
 
 export default {
   components: { UploadAdresses },
@@ -54,7 +58,9 @@ export default {
       newAdresse: "",
       alert: "",
       file: '',
-      result: []
+      result: [],
+      error: '',
+      resultRep: ''
     };
   },
   methods: {
@@ -72,20 +78,16 @@ export default {
     },
     queryCoo(adresse) {
       console.log('adresse', adresse)
-      let qryAdresse = adresse
-      console.log('qryAdresse', qryAdresse)
-      const xmlhttp = new XMLHttpRequest()
-      xmlhttp.onreadystatechange = () => {
-        if (xmlhttp.readyState == 4) {
-          const response = JSON.parse(xmlhttp.response)
-          adresse.lat = response.infos.lat
-          adresse.lng = response.infos.lng
-          console.log('adresse avec lat', adresse)
-          this.$store.dispatch("addAdresse", qryAdresse)
-        }
-      };
-      xmlhttp.open("get",`https://api.torop.net/cartographie/geocode?adresse=${qryAdresse}`)
-      xmlhttp.send();
+
+      axios
+         .get(`https://api.torop.net/cartographie/geocode?adresse=${adresse.text}`)
+         .then((response) => {this.result = response.data.data.infos; this.resultRep = response; console.log(response)})
+         .catch(error => console.log(error));
+
+       adresse.lat = this.result['lat']
+       adresse.lng = this.result['lng']
+       console.log('add ac lat', adresse)
+
     },
     deleteError() {
       this.alert = ''
@@ -93,7 +95,7 @@ export default {
   },
   computed: {
     ...mapGetters(["getAdresses"])
-  },
+  }
 };
 </script>
 <style>
