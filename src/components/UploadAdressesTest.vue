@@ -89,7 +89,7 @@ export default {
             reader.readAsText(file)
         },
         verifFile(file) {
-            console.log(file)
+            //console.log(file)
             let hasSize = file.size > 0 ? true : false
             if (hasSize) {
                 let extension = file.name.split('.').pop()
@@ -114,7 +114,7 @@ export default {
                     this.$store.dispatch("addAdresse", texts[i])
                 } 
             }
-        }
+        },
     },
     computed: {
         placeholderSpan() {

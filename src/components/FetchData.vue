@@ -1,32 +1,40 @@
 <template>
-    
-</template>
+    <div id="fetch-data">
+        
+        <button type="button" :class="classObjet" @click="addCoos">
+            Demander coordonnées T
+        </button>
+        
 
+    
+    </div>
+</template>
 <script>
+import axios from 'axios'
 
 export default {
     name: 'FetchData',
-    props: ['url'],
+    props: {
+        
+    },
     data() {
         return {
-            loaded: false,
             response: null,
+            adresse: null,
+            classObjet: {
+                'button': true,
+                'is-loading': false
+            }
         }
     },
-    created() {
-        axios.get(this.url)
-            .then((response) => {
-                this.response = response
-                this.loaded = true
-            })
+    methods: {
+        addCoos() {
+            this.$emit('add-coos')
+            //console.log('addcoos', this.$listeners)
+        },
     },
-    render() {
-        if (!this.loaded) {
-            return this.$slots.loading[0]
-        }
-        return this.$scopedSlots.default({
-            response: this.response.data,
-        })
+    computed: {
+
     }
 }
 </script>

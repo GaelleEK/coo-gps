@@ -32,10 +32,15 @@
           <td>
             <div class="buttons are-small">
               <button class="button" @click="() => deleteAdresse(adresse)">Effacer</button>
-              <button class="button" @click="() => queryCoo(adresse)">Demander coordonnées</button>
+              <button :class="classObjet" @click="() => queryCoo(adresse)">Demander coordonnées</button>
             </div>
           </td>
-          <td>lat: {{ adresse.lat }} / long: {{ adresse.lng }}</td>
+          <td>
+            <div v-if="!loading">lat: {{ adresse.lat }} / lng:{{ adresse.lng }}</div>
+            <div v-if="errorCoo">{{ error }}</div>
+            <div v-else>En attente ...</div>
+
+          </td>
         </tr>
       </table>
       <div>{{ result }}</div>
@@ -61,7 +66,13 @@ export default {
       file: '',
       result: [],
       error: '',
-      resultRep: ''
+      resultRep: '',
+      classObjet: {
+        'button': true,
+        'is-loading': false
+      },
+      errorCoo: null,
+      loading: true
     };
   },
   methods: {
@@ -79,17 +90,25 @@ export default {
     },
     queryCoo(adresse) {
       console.log('adresse', adresse)
-
-      axios
-         .get(`https://api.torop.net/cartographie/geocode?adresse=${adresse.text}`)
-         .then((response) => {this.result = response.data.data.infos; this.resultRep = response; console.log(this.result)})
-         //.catch(error => this.error);
-      // TODO: à voir coo ne s affiche pas au 1ier clic
-      adresse.text = this.result['adresse']
-       adresse.lat = this.result['lat']
-       adresse.lng = this.result['lng']
-       console.log('add ac lat', adresse)
-
+      this.loading = true
+      if(adresse.text) {
+        this.requestHttp(adresse.text)
+      }
+      
+       
+    },
+    async requestHttp(text) {
+        try {
+          axios.get(`https://api.torop.net/cartographie/geocode?adresse=${text}`)
+              .then(response => { 
+                console.log('reponse', response)
+                this.resultRep = response.data
+                
+                })
+                
+        } catch (error) {
+          console.log(error)
+        }
     },
     deleteError() {
       this.alert = ''
