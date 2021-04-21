@@ -2,18 +2,19 @@
   <div id="adresse" class="container is-fluid">
     <div class="box">
       <h1 class="title is-1 is-spaced">Mes adresses</h1>
-      <!-- <p class="subtitle-3 is-spaced">Principe: </p> -->
       <p class="text pb-5">Entrez une adresse valide, c'est à dire un nom de rue et un nom de ville au minimum</p>
       <div class="field">
           <div class="control has-addons has-addons-centered pb-3">
-            <input type="text" class="input" v-model="newAdresse" @change="deleteError" @keyup.enter="addAdresse" placeholder="Ex: 10 rue Georges Genoux Vesoul">
+            <input type="text" class="input" v-model="newAdresse" @change="addAdresse" @keyup.enter="addAdresse" placeholder="Ex: 10 rue Georges Genoux Vesoul">
           </div>
           <div class="control">
             <p class="help is-danger" v-if="alert">{{ alert }}</p>
-            <button class="button" @click="addAdresse">Enregistrer</button>
+            <button class="button" @click="() => addAdresse(this.getAdresses)">Enregistrer</button>
         </div>
       </div>
+
       <upload-adresses/>
+
       <div>
     </div>
     </div>  
@@ -24,7 +25,10 @@
           <th>#</th>
           <th>Adresses</th>
           <th>Actions</th>
-          <th>Coordonnées</th>
+          <th>
+            <p>Coordonnées</p>
+            <button class="button is-small" @click="getAllCoos" >Pour toutes les adresses</button>
+          </th>
         </tr>
         <tr v-for="adresse in getAdresses" :key="adresse.id">
           <td>{{ adresse.id }}</td>
@@ -36,15 +40,15 @@
             </div>
           </td>
           <td>
-            <div v-if="!loading">lat: {{ adresse.lat }} / lng:{{ adresse.lng }}</div>
-            <div v-else-if="errorCoo">{{ error }}</div>
-            <div v-else>En attente ...</div>
+            <div v-if="!loading && adresse.lat && adresse.lng" >
+              <p>lat: {{ adresse.lat }}</p>
+              <p>lng: {{ adresse.lng }}</p>
+            </div>
+            <div v-else><progress class="progress is-small is-dark"></progress></div>
 
           </td>
         </tr>
       </table>
-      <div>{{ result }}</div>
-      <div>{{ resultRep }}</div>
     </div>
   </div>
 </template>
@@ -62,17 +66,12 @@ export default {
     return {
       newAdresse: "",
       alert: "",
-      file: '',
-      result: null,
-      error: '',
-      resultRep: '',
+      loading: null,
       classObjet: {
         'button': true,
         'is-loading': false
-      },
-      errorCoo: null,
-      loading: true
-    };
+      }
+    }
   },
   methods: {
     addAdresse() {
@@ -88,29 +87,30 @@ export default {
       this.$store.dispatch("deleteAdresse", adresse)
     },
     queryCoo(adresse) {
-      //console.log('adresse', adresse)
       this.loading = true
-      if(adresse.text) {
         this.getCoo(adresse.text)
           .then(reponse => {
-                //console.log('if rep', reponse.data.infos)
-                adresse.lat = reponse.data.infos.lat
-                adresse.lng = reponse.data.infos.lng
+                this.addCooToAdresse(reponse.data.infos.lat, reponse.data.infos.lng, adresse)
                 this.loading = false
             })
-          }
-        //console.log('rep', this.getCoo(adresse.text), this.result)
+    },
+    addCooToAdresse(lat, lng, adresse) {
+      adresse.lat = lat
+      adresse.lng = lng
+      return adresse
+    },
+    getAllCoos() {
+      for (let i = 0; i < this.getAdresses.length; i++) {
+        const adresse = this.getAdresses[i]
+        this.queryCoo(adresse)
+      }
     },
     async getCoo(text) {
       const reponse = await axios.get(`https://api.torop.net/cartographie/geocode?adresse=${text}`)
       return reponse.data
     },
-    deleteError() {
-      this.alert = ''
-    },
   },
   computed: {
-    
     ...mapGetters(["getAdresses"])
   }
 };
