@@ -37,7 +37,7 @@
           </td>
           <td>
             <div v-if="!loading">lat: {{ adresse.lat }} / lng:{{ adresse.lng }}</div>
-            <div v-if="errorCoo">{{ error }}</div>
+            <div v-else-if="errorCoo">{{ error }}</div>
             <div v-else>En attente ...</div>
 
           </td>
@@ -89,32 +89,29 @@ export default {
       this.$store.dispatch("deleteAdresse", adresse)
     },
     queryCoo(adresse) {
-      console.log('adresse', adresse)
+      //console.log('adresse', adresse)
       this.loading = true
       if(adresse.text) {
-        this.requestHttp(adresse.text)
-      }
-      
-       
+        this.getCoo(adresse.text)
+          .then(reponse => {
+                //console.log('if rep', reponse.data.infos)
+                adresse.lat = reponse.data.infos.lat
+                adresse.lng = reponse.data.infos.lng
+                this.loading = false
+            })
+          }
+        //console.log('rep', this.getCoo(adresse.text), this.result)
     },
-    async requestHttp(text) {
-        try {
-          axios.get(`https://api.torop.net/cartographie/geocode?adresse=${text}`)
-              .then(response => { 
-                console.log('reponse', response)
-                this.resultRep = response.data
-                
-                })
-                
-        } catch (error) {
-          console.log(error)
-        }
+    async getCoo(text) {
+      const reponse = await axios.get(`https://api.torop.net/cartographie/geocode?adresse=${text}`)
+      return reponse.data
     },
     deleteError() {
       this.alert = ''
-    }
+    },
   },
   computed: {
+    
     ...mapGetters(["getAdresses"])
   }
 };
