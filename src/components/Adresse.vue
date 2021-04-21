@@ -51,8 +51,7 @@
 
 <script>
 import { mapGetters } from "vuex"
-import UploadAdresses from './UploadAdressesTest.vue'
-//import FetchData from './FetchData.vue'
+import UploadAdresses from './UploadAdresses.vue'
 
 const axios = require('axios')
 
@@ -64,7 +63,7 @@ export default {
       newAdresse: "",
       alert: "",
       file: '',
-      result: [],
+      result: null,
       error: '',
       resultRep: '',
       classObjet: {
