@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 let id = 0
 function createAdresse(text) {
+  text.toString().replace(/\n|\r/g, '')
   return {
     text,
     id: id++
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   state: {
     adresses: [],
     authenticated: false,
+    errors: []
   },
   getters: {
     getAdresses: state => {
@@ -23,6 +25,9 @@ export default new Vuex.Store({
     },
     isAuthenticated: state => {
       return state.authenticated
+    },
+    getErrors: state => {
+      return state.errors
     }
   },
   mutations: {
@@ -44,6 +49,8 @@ export default new Vuex.Store({
             state.adresses.push(adresse)
           } else {
             console.log('adresse invalide')
+            let error = { type: 'adresse invalide', item}
+            state.errors.push(error)
           }
         }
       }
@@ -57,6 +64,9 @@ export default new Vuex.Store({
       } else {
         state.authenticated = true
       }
+    },
+    DELETE_ERRORS(state) {
+      state.errors = []
     }
   },
   actions: {
@@ -68,6 +78,9 @@ export default new Vuex.Store({
     },
     setAuthenticated(context, authenticated) {
       context.commit('SET_AUTHENTICATED', authenticated)
+    }, 
+    deleteErrors(context) {
+      context.commit('DELETE_ERRORS')
     }
   }
 })

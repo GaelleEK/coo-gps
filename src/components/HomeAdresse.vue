@@ -14,19 +14,6 @@ import UploadAdresses from './UploadAdresses.vue'
 
 export default {
     name: 'HomeAdresse',
-    components: { InputAdresse, ListAdresse, UploadAdresses },
-    data() {
-        return {
-            //  url: {
-            // type: URL,
-            // //base: 'https://api.torop.net/cartographie/geocode?adresse=',
-            // required: false
-            // },
-            // adresse: {
-            //     id: Number,
-            //     text: String
-            // }
-        }
-    },
+    components: { InputAdresse, ListAdresse, UploadAdresses }
 }
 </script>

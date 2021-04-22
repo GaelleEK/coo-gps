@@ -13,16 +13,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-//import Axios from './Axios.vue'
-
-
 import axios from 'axios'
 
 
 
 export default {
-  //components: { Axios },
-  
+  name: 'ListAdresse',
     data() {
         return {
             result: null,
