@@ -1,22 +1,22 @@
 <template>
-    <div :key="adresse.id" :adresse="adresse">
+    <div class="block" :key="adresse.id" :adresse="adresse">
         #{{ adresse.id }} --> {{ adresse.text }}
         
          <base-adresse-button :adresse="adresse" @click.native="deleteAdresse">Effacer</base-adresse-button>
         
 
-         <button-coos ></button-coos>
+         <adresse-button-coos ></adresse-button-coos>
     </div>
 </template>
 
 <script>
 import BaseAdresseButton from './BaseAdresseButton.vue'
-import ButtonCoos from './ButtonCoos.vue'
+import AdresseButtonCoos from './AdresseButtonCoos.vue'
 
 
 export default {
     name: 'BaseAdresse',
-    components: { BaseAdresseButton, ButtonCoos },
+    components: { BaseAdresseButton, AdresseButtonCoos },
     props: {
         adresse: {
            type: Object,

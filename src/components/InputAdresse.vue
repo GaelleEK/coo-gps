@@ -1,4 +1,5 @@
 <template>
+<div class="block">
     <div id="input-adresse" class="field">
         <div class="control has-addons has-addons-centered pb-3">
             <input type="text" class="input" v-model="newAdresse" @change="deleteError" @keyup.enter="addAdresse" placeholder="Ex: 10 rue Georges Genoux Vesoul">
@@ -8,6 +9,7 @@
             <button class="button" @click="addAdresse">Enregistrer</button>
         </div>
     </div>
+</div>
 </template>
 
 <script>

@@ -10,7 +10,7 @@
 const axios = require('axios')
 
 export default {
-    name: 'BaseAdresseButton',
+    name: 'AdresseButtonCoos',
     data() {
         return {
             loading: false

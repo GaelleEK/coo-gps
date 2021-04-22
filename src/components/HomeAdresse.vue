@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="container is-fluid">
+        <h1 class="title">GEOC<span><img src="../assets/logo.svg" class="icon"></span>DE</h1>
         <input-adresse />
         <upload-adresses />
         <list-adresse />
