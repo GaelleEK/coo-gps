@@ -1,12 +1,7 @@
 <template>
 <div id="list-adresse" v-if="getAdresses.length">
     <div v-for="adresse in getAdresses" :key="adresse.id" :adresse="adresse">
-        {{ adresse }} - {{ adresse.id }} - {{ adresse.text }}
-        <div class="buttons are-small">
-              <button class="button" @click="() => deleteAdresse(adresse)">Effacer</button>
-              <button class="button" @click="() => queryCoo(adresse)">Demander coordonnées</button> 
-              <!-- <axios class="button" :adresse="adresse" @click="showCoo"/>  -->
-        </div>
+        <base-adresse :key="adresse.id" :adresse="adresse"/>
     </div>
 </div>
 </template>
@@ -14,11 +9,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import axios from 'axios'
-
-
+import BaseAdresse from './BaseAdresse.vue'
 
 export default {
   name: 'ListAdresse',
+  components: {
+    BaseAdresse
+  },
     data() {
         return {
             result: null,
@@ -32,7 +29,6 @@ export default {
             this.$store.dispatch("deleteAdresse", adresse)
         },
         queryCoo(adresse) {
-            //TODO: component HTTP with axios
             console.log('demande coo')
             if(adresse.text) {
                 axios.get(`https://api.torop.net/cartographie/geocode?adresse=${adresse.text}`)

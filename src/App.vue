@@ -7,8 +7,8 @@
 <script>
 import Navigation from './components/Nav.vue'
 export default {
-  components: { Navigation },
-  name: "App"
+  name: "ProjectGps",
+  components: { Navigation }
 }
 </script>
 
