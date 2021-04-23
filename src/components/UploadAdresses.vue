@@ -24,15 +24,19 @@
             <p class="help is-danger mt-4" v-if="error" >{{ error }}</p>
             <button class="button" @click="submitFile">Enregistrer</button>
         </div>
-        <div>
-        </div>
-        <div class="help is-danger mt-4" v-if="getErrors.length">
-            <p>Liste des adresses invalides : </p>
-            <div v-for="error in getErrors" :key="error.id" >
-                {{ error.item }}
+        <!-- Affichage des adresses non-enregistrées car doublon ou vide -->
+        <div class="message help is-danger mt-4" v-if="getErrors.length">
+            <div class="message-header">
+                <p>
+                    Liste des adresses invalides : 
+                </p>
+                <button class="delete is-small" @click="deleteErrors"></button>
+                
             </div>
-            <div class="control">
-                <button class="button is-small" @click="deleteErrors">Effacer</button>
+            <div v-for="error in getErrors" :key="error.id" >
+                <p class="message-body">
+                    {{ error.item }}
+                </p>
             </div>
         </div>
     </div>
