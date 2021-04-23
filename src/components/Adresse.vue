@@ -116,7 +116,7 @@ export default {
 };
 </script>
 <style>
-table {
+/* table {
   width: 100%;
   display: table;
   border-spacing: 0;
@@ -125,5 +125,5 @@ table {
 th,
 td {
   border: 1px solid black;
-}
+} */
 </style>

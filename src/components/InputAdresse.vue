@@ -5,7 +5,7 @@
             <input type="text" class="input" v-model="newAdresse" @change="deleteError" @keyup.enter="addAdresse" placeholder="Ex: 10 rue Georges Genoux Vesoul">
         </div>
         <div class="control">
-            <p class="help is-danger" v-if="alert">{{ alert }}</p>
+            <p class="help is-danger pb-1" v-if="alert">{{ alert }}</p>
             <button class="button" @click="addAdresse">Enregistrer</button>
         </div>
     </div>

@@ -44,11 +44,11 @@ export default new Vuex.Store({
           //variable q filtre les adresses identiques
           let q = state.adresses.filter(adresse => adresse.text == item)
           if(q.length == 0) {
-            console.log('adresse valide')
+            //console.log('adresse valide')
             adresse = createAdresse(item)
             state.adresses.push(adresse)
           } else {
-            console.log('adresse invalide')
+            //console.log('adresse invalide')
             let error = { type: 'adresse invalide', item}
             state.errors.push(error)
           }

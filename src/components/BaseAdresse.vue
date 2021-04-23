@@ -1,22 +1,27 @@
 <template>
-    <div class="block" :key="adresse.id" :adresse="adresse">
-        #{{ adresse.id }} --> {{ adresse.text }}
-        
-         <base-adresse-button :adresse="adresse" @click.native="deleteAdresse">Effacer</base-adresse-button>
-        
-
-         <adresse-button-coos ></adresse-button-coos>
-    </div>
+    <section class="tile is-ancestor box" :key="adresse.id" :adresse="adresse">
+       
+        <div class="tile is-parent level">
+            
+            <div class="tile is-1 level-item">{{ adresse.id }}</div>
+            
+            <div class="tile is-5 level-item">{{ adresse.text }}</div>
+            <div class="tile is-5 level-item"><adresse-button-coos></adresse-button-coos></div>
+            
+                <button class="delete has-background-grey level-item" :adresse="adresse" @click="deleteAdresse"></button>
+            
+        </div>
+    </section>
 </template>
 
 <script>
-import BaseAdresseButton from './BaseAdresseButton.vue'
+
 import AdresseButtonCoos from './AdresseButtonCoos.vue'
 
 
 export default {
     name: 'BaseAdresse',
-    components: { BaseAdresseButton, AdresseButtonCoos },
+    components: { AdresseButtonCoos },
     props: {
         adresse: {
            type: Object,
